@@ -2,3 +2,5 @@ node_modules
 config/*.local.*
 .DS_Store
 package-lock.json
+.eslintrc.js
+dist
