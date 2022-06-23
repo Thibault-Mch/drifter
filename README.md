@@ -1,2 +1,2 @@
 # drifter
-Some say the future os social media lie here
+Some say the future of social media lies here
