@@ -1,18 +1,23 @@
-  {
-    "extends": "@tsconfig/node16/tsconfig.json",
-    "compilerOptions": {
-      "outDir": "dist",
-      "module": "commonjs",
-      "esModuleInterop": true,
-      "resolveJsonModule": true,
-      "module": "CommonJS",
-      "moduleResolution": "Node",
-      "noImplicitAny": false,
-    },
-    "include": [
-      "../src"
-    ],
-    "exclude": [
-      "node_modules"
-    ]
-  }
+{
+  "compileOnSave": true,
+  "extends": "@tsconfig/node16/tsconfig.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "noImplicitAny": false,
+  },
+  "include": [
+    "../"
+  ],
+  "exclude": [
+    "../../node_modules"
+  ],
+  "mongoDB": {
+    "username": "dbUser",
+    "password": "4ebbv8vS9uRjGF9",
+    "cluster": "vidjet.hevwh.mongodb.net"
+  },
+}
