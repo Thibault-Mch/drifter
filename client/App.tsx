@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
-import { useEffect } from 'react';
+
 export default function App() {
   const fetchApi = async () => {
     fetch('http://localhost:3001/add_user', {
@@ -14,7 +14,9 @@ export default function App() {
   }
 
   const getUsers = async () => {
-    const res = await fetch('http://localhost:3001/add_user')
+    const res = await fetch('http://localhost:3001/users')
+    const data = await res.json()
+    console.log(data)
   }
 
 
@@ -25,10 +27,11 @@ export default function App() {
       <StatusBar style="auto" />
       <Button
         onPress={fetchApi}
-        title="Learn More"
+        title="Create user"
         color="#841584"
         accessibilityLabel="Learn more about this purple button"
       />
+      <Button onPress={getUsers} title="Get Users" />
     </View>
   );
 }
