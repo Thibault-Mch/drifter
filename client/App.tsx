@@ -1,22 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
+import api from "./src/api/index"
 
 export default function App() {
-  const fetchApi = async () => {
-    fetch('http://localhost:3001/add_user', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ name: 'yoyo', age: 12 })
-    }).then(response => response.json()).then(data => console.log(data))
+  const createUser = async () => {
+    const dataToSend: { name: string, age: number } = {
+      name: "Thierry", age: 23
+    }
+    await api.createUser(dataToSend);
   }
 
-  const getUsers = async () => {
-    const res = await fetch('http://localhost:3001/users')
-    const data = await res.json()
-    console.log(data)
+  const fetchUsers = async () => {
+    console.log(await api.getUsers())
   }
 
 
@@ -26,12 +21,12 @@ export default function App() {
       <Text>nemnlw try</Text>
       <StatusBar style="auto" />
       <Button
-        onPress={fetchApi}
+        onPress={createUser}
         title="Create user"
         color="#841584"
         accessibilityLabel="Learn more about this purple button"
       />
-      <Button onPress={getUsers} title="Get Users" />
+      <Button onPress={fetchUsers} title="Get Users" />
     </View>
   );
 }

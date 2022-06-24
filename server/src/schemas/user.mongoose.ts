@@ -1,10 +1,13 @@
 import mongoose from "mongoose";
-
-const UserSchema = new mongoose.Schema({
+interface userSchema {
+  name: string;
+  age: number;
+}
+const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
-    unique: true,
+    required: [true, 'name is required'],
+    unique: true
   },
   age: {
     type: Number,
@@ -12,6 +15,6 @@ const UserSchema = new mongoose.Schema({
   },
 });
 
-const User = mongoose.model("User", UserSchema);
+const User = mongoose.model("User", userSchema);
 
 export default User

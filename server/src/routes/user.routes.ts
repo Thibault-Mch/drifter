@@ -2,14 +2,18 @@ import express from "express";
 import userSchema from "../schemas/user.mongoose";
 const app = express();
 
-app.post("/add_user", async (request, response) => {
+app.post("/add-user", async (request, response) => {
 
   const user = new userSchema(request.body);
   try {
     await user.save();
     response.send(user);
   } catch (error) {
-    response.status(500).send(error);
+    if (error instanceof Error) {
+      response.status(500).send(error.message);
+    } else {
+      console.log('Unexpected error', error);
+    }
   }
 });
 
