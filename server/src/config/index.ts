@@ -2,7 +2,6 @@
 import express from "express";
 import mongoose from "mongoose";
 import routes from "../routes/index.routes"
-import bodyParser from 'body-parser'
 
 const PORT = process.env.PORT || 3001;
 
@@ -37,7 +36,6 @@ app.use(function (req, res, next) {
 });
 
 app.use('/', routes)
-// app.use(bodyParser.json())
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });

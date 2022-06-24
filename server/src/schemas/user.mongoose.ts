@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 interface userSchema {
   name: string;
-  age: number;
+  age?: number;
 }
 const userSchema = new mongoose.Schema({
   name: {
