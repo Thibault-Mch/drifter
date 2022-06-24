@@ -1,25 +1,19 @@
 
-const express = require("express");
-const mongoose = require("mongoose");
+import express from "express";
+import mongoose from "mongoose";
+import routes from "../routes/index.routes"
+import bodyParser from 'body-parser'
 
-import user from '../controllers/user.controllers'
 const PORT = process.env.PORT || 3001;
 
-const dotenv = require("dotenv")
+import dotenv from "dotenv";
 dotenv.config()
 const app = express();
 
-user('Heisenberg')
 
-
-console.log(process.env.MONGO_URL)
-
-mongoose.connect(process.env.MONGO_URL,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  });
-
+// nullish coalescing operator
+const uri: string = process.env.REACT_APP_MONGO_URL ?? ''
+mongoose.connect(uri);
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error: "));
@@ -28,11 +22,13 @@ db.once("open", function () {
 });
 
 
+
 app.get("/api", (req, res) => {
   res.json({ message: "Hello from server!" });
 });
 
-
+app.use('/', routes)
+app.use(bodyParser.json())
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });
