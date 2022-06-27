@@ -5,7 +5,7 @@ import api from "./src/api/index"
 export default function App() {
   const createUser = async () => {
     const dataToSend: { name: string, age: number } = {
-      name: "Thierry", age: 23
+      name: "Thjokkjjierry", age: "23"
     }
     await api.createUser(dataToSend);
   }

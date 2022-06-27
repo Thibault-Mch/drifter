@@ -2,8 +2,6 @@ import axios from "axios";
 import { API_URL_LOCAL } from "@env"
 
 const getUsers = async () => {
-
-  console.log(API_URL_LOCAL)
   try {
     const res = await axios.get(
       `${API_URL_LOCAL}/users`
