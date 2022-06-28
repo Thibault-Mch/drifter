@@ -21,10 +21,6 @@ db.once("open", function () {
 });
 
 
-
-app.get("/api", (req, res) => {
-  res.json({ message: "Hello from server!" });
-});
 // to use req.body
 app.use(express.json());
 
