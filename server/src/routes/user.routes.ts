@@ -1,12 +1,14 @@
 import express from "express";
+import { createUser } from "../controllers/user.controller";
 import userMongooseSchema from "../schemas/user.mongoose";
+
 const app = express();
 
 app.post("/add-user", async (request, response) => {
-  const user = new userMongooseSchema(request.body);
+  const newUser = createUser(request.body)
   try {
-    await user.save();
-    response.send(user);
+    await newUser.save();
+    response.send(newUser);
   } catch (error) {
     if (error instanceof Error) {
       response.status(500).send(error.message);
