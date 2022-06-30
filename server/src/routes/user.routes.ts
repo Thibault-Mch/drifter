@@ -1,25 +1,34 @@
 import express from "express";
-import userSchema from "../schemas/user.mongoose";
+import { createUser } from "../controllers/user.controller";
+import userMongooseSchema from "../schemas/user.mongoose";
+
 const app = express();
 
-app.post("/add_user", async (request, response) => {
-  console.log(request, "itsmee")
-  // const user = new userSchema(request.body);
-  // try {
-  //   await user.save();
-  //   response.send(user);
-  // } catch (error) {
-  //   response.status(500).send(error);
-  // }
+app.post("/add-user", async (request, response) => {
+  const newUser = createUser(request.body)
+  try {
+    await newUser.save();
+    response.send(newUser);
+  } catch (error) {
+    if (error instanceof Error) {
+      response.status(500).send(error.message);
+    } else {
+      console.log('Unexpected error', error);
+    }
+  }
 });
 
 app.get("/users", async (request, response) => {
-  const users = await userSchema.find({});
+  const users = await userMongooseSchema.find({});
 
   try {
     response.send(users);
   } catch (error) {
-    response.status(500).send(error);
+    if (error instanceof Error) {
+      response.status(500).send(error.message);
+    } else {
+      console.log('Unexpected error', error);
+    }
   }
 });
 

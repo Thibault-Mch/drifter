@@ -2,7 +2,6 @@
 import express from "express";
 import mongoose from "mongoose";
 import routes from "../routes/index.routes"
-import bodyParser from 'body-parser'
 
 const PORT = process.env.PORT || 3001;
 
@@ -22,13 +21,17 @@ db.once("open", function () {
 });
 
 
+// to use req.body
+app.use(express.json());
 
-app.get("/api", (req, res) => {
-  res.json({ message: "Hello from server!" });
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+  next();
 });
 
 app.use('/', routes)
-app.use(bodyParser.json())
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });

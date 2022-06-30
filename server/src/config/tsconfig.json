@@ -8,6 +8,12 @@
     "module": "CommonJS",
     "moduleResolution": "Node",
     "noImplicitAny": false,
+    "lib": [
+      "es2015",
+      "es2016",
+      "dom",
+      "es2018.promise"
+    ]
   },
   "include": [
     "../"
