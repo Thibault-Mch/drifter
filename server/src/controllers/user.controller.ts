@@ -18,4 +18,3 @@ export const createUser = (userData: { name: string, age: number }) => {
   return new userMongooseSchema(userData);
 }
 
-// export default { createUser: createUser }
