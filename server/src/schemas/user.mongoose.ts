@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 interface userSchema {
+  _id: string;
   name: string;
   age?: number;
-  _id: string;
   creationDate: string;
   modificationDate: string;
 }

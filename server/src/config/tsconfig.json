@@ -21,9 +21,4 @@
   "exclude": [
     "../../node_modules"
   ],
-  "mongoDB": {
-    "username": "dbUser",
-    "password": "4ebbv8vS9uRjGF9",
-    "cluster": "vidjet.hevwh.mongodb.net"
-  },
 }
