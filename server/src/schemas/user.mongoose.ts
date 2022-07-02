@@ -1,13 +1,19 @@
-import mongoose from "mongoose";
-interface userSchema {
+import mongoose, { Schema, Model, Document } from "mongoose";
+import { IUser } from '../interfaces/user.interface'
+import { Password } from '../middleware/auth.middleware'
+
+export interface UserDocument extends Document {
   _id: string;
   name: string;
   age?: number;
   creationDate: string;
   modificationDate: string;
 }
+interface UserModel extends Model<UserDocument> {
+  build(attrs: IUser): UserDocument
+}
 
-const userSchema = new mongoose.Schema({
+const userSchema: Schema = new mongoose.Schema({
   _id: {
     type: String,
     required: true,
@@ -34,6 +40,21 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-const User = mongoose.model("User", userSchema);
+userSchema.pre("save", async function (done) {
+  if (this.isModified("password")) {
+    const hashed = await Password.toHash(this.get("password"))
+    this.set("password", hashed)
+  }
+  done()
+})
+
+userSchema.statics.build = (attrs: IUser) => {
+  return new User(attrs)
+}
+
+const User = mongoose.model<UserDocument, UserModel>(
+  "User",
+  userSchema
+)
 
 export default User
