@@ -1,11 +1,11 @@
-import express from "express";
-import { createUser } from "../controllers/user.controller";
+import express, { Request, Response } from "express";
+import userController from "../controllers/user.controller";
 import userMongooseSchema from "../schemas/user.mongoose";
 
 const app = express();
 
-app.post("/add-user", async (request, response) => {
-  const newUser = createUser(request.body)
+app.post("/add-user", async (request: Request, response: Response) => {
+  const newUser = userController.createUser(request.body)
   try {
     await newUser.save();
     response.send(newUser);
@@ -18,7 +18,7 @@ app.post("/add-user", async (request, response) => {
   }
 });
 
-app.get("/users", async (request, response) => {
+app.get("/users", async (request: Request, response: Response) => {
   const users = await userMongooseSchema.find({});
 
   try {
