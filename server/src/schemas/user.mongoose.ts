@@ -2,16 +2,17 @@ import mongoose, { Schema, Model, Document } from "mongoose";
 import { IUser } from '../interfaces/user.interface'
 import { Password } from '../middleware/auth.middleware'
 
-// export interface UserDocument extends Document {
-//   _id: string;
-//   name: string;
-//   age?: number;
-//   creationDate: string;
-//   modificationDate: string;
-// }
-// interface UserModel extends Model<UserDocument> {
-//   build(attrs: IUser): UserDocument
-// }
+export interface UserDocument extends Document {
+  _id: string;
+  name: string;
+  age?: number;
+  creationDate: string;
+  modificationDate: string;
+  password: string;
+}
+interface UserModel extends Model<UserDocument> {
+  build(attrs: IUser): UserDocument
+}
 
 const userSchema: Schema = new mongoose.Schema({
   _id: {
@@ -52,7 +53,8 @@ userSchema.statics.build = (attrs: IUser) => {
   return new User(attrs)
 }
 
-const User = mongoose.model<IUser>(
+
+const User = mongoose.model<UserDocument, UserModel>(
   "User",
   userSchema
 )
