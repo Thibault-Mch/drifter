@@ -5,7 +5,7 @@ import { IUser } from '../server/src/interfaces/user.interface'
 export default function App() {
   const createUser = async () => {
     const dataToSend: IUser = {
-      username: "Joseph", password: "123456", email: "test@test.com"
+      username: "Joseph2", password: "123456", email: "test@test2.com"
     }
     console.log(await api.createUser(dataToSend))
   }

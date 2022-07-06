@@ -15,19 +15,19 @@ const log: IDebugger = debug("user:controller")
 class UserController {
   async signup(request: Request, res: Response, next: NextFunction) {
     try {
-      const username = request.body.username
-      const email = request.body.email
-      const password = request.body.password
-      const _id = uuidv4()
-      const creationDate = new Date().toISOString();
-      const modificationDate = new Date().toISOString();
+      const username: string = request.body.username
+      const email: string = request.body.email
+      const password: string = request.body.password
+      const _id: string = uuidv4()
+      const creationDate: string = new Date().toISOString();
+      const modificationDate: string = new Date().toISOString();
       const user = await this.findUserByEmail(email)
       log("user", user)
       if (user) {
         throw new Error("User Already Exists")
       } else {
         try {
-          const newUser: IUser = await this.createUser({
+          const newUser = await this.createUser({
             username,
             email,
             password,
@@ -38,19 +38,21 @@ class UserController {
           const token = jwt.sign({ username, password }, privateKey, {
             expiresIn: tokenExpirationInSeconds,
           })
-          delete newUser.password
           return res.status(200).json({
             success: true,
             data: newUser,
             token,
           })
-        } catch (e) {
-          log("Controller capturing error", e)
-          throw new Error("Error while register")
+        } catch (error) {
+          if (error instanceof Error) {
+            throw new Error(error.message)
+          } else {
+            console.log('Unexpected error with signup', error);
+          }
         }
       }
-    } catch (e) {
-      next(e)
+    } catch (error) {
+      next(error)
     }
   }
 
@@ -60,7 +62,7 @@ class UserController {
       const password = req.body.password
       const user = await this.findUserByEmail(email)
       log("user", user)
-      if (user) {
+      if (user && user.password) {
         const isPasswordMatch = await Password.compare(user.password, password)
         if (!isPasswordMatch) {
           throw new Error("Invalid Password")
@@ -88,8 +90,13 @@ class UserController {
     try {
       const user = userMongooseSchema.build(data)
       await user.save()
-    } catch (e) {
-      throw new Error(e)
+      return user
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(error.message)
+      } else {
+        console.log('Unexpected error with signup', error);
+      }
     }
   }
 
