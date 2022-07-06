@@ -18,7 +18,7 @@ const getUsers = async () => {
 
 const createUser = async (data: object) => {
   try {
-    const res = await axios.post(`${API_URL_LOCAL}/add-user`, data)
+    const res = await axios.post(`${API_URL_LOCAL}/signup`, data)
     return res.data
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
