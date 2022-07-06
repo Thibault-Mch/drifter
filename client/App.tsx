@@ -1,11 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import api from "./src/api/index"
-
+import { IUser } from '../server/src/interfaces/user.interface'
 export default function App() {
   const createUser = async () => {
-    const dataToSend: { name: string, age: number } = {
-      name: "Joseph", age: "23"
+    const dataToSend: IUser = {
+      username: "Joseph", password: "123456", email: "test@test.com"
     }
     console.log(await api.createUser(dataToSend))
   }

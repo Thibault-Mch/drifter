@@ -3,45 +3,49 @@ import userMongooseSchema from "../schemas/user.mongoose";
 import { v4 as uuidv4 } from 'uuid';
 import { IUser } from '../interfaces/user.interface'
 import { NextFunction, Request, Response } from "express"
+import debug, { IDebugger } from "debug"
 import jwt from "jsonwebtoken"
 import { Password } from "../middleware/auth.middleware"
-const tokenExpirationInSeconds = 36000
-class UserController {
-  createUser(userData: IUser) {
-    const user: IUser = userData
-    user._id = uuidv4()
-    user.creationDate = new Date().toISOString();
-    user.modificationDate = new Date().toISOString();
-    // add here the jwt auth
-    return new userMongooseSchema(userData);
-  }
+import * as fs from 'fs';
+import * as path from 'path';
 
+const privateKey = fs.readFileSync(path.join(__dirname, '../../../private.key'));
+const tokenExpirationInSeconds = 36000
+const log: IDebugger = debug("user:controller")
+class UserController {
   async signup(request: Request, res: Response, next: NextFunction) {
     try {
       const username = request.body.username
       const email = request.body.email
       const password = request.body.password
-      const user = await AuthService.findUserByEmail(email)
-      console.log("user", user)
+      const _id = uuidv4()
+      const creationDate = new Date().toISOString();
+      const modificationDate = new Date().toISOString();
+      const user = await this.findUserByEmail(email)
+      log("user", user)
       if (user) {
         throw new Error("User Already Exists")
       } else {
         try {
-          const newUser = await AuthService.createUser({
+          const newUser: IUser = await this.createUser({
             username,
             email,
             password,
+            _id,
+            creationDate,
+            modificationDate
           })
-          const token = jwt.sign({ username, password }, jwtSecret, {
+          const token = jwt.sign({ username, password }, privateKey, {
             expiresIn: tokenExpirationInSeconds,
           })
+          delete newUser.password
           return res.status(200).json({
             success: true,
             data: newUser,
             token,
           })
         } catch (e) {
-          console.log("Controller capturing error", e)
+          log("Controller capturing error", e)
           throw new Error("Error while register")
         }
       }
@@ -54,15 +58,15 @@ class UserController {
     try {
       const email = req.body.email
       const password = req.body.password
-      const user = await AuthService.findUserByEmail(email)
-      console.log("user", user)
+      const user = await this.findUserByEmail(email)
+      log("user", user)
       if (user) {
         const isPasswordMatch = await Password.compare(user.password, password)
         if (!isPasswordMatch) {
           throw new Error("Invalid Password")
         } else {
-          console.log("jwt Secret", jwtSecret)
-          const token = jwt.sign(req.body, jwtSecret, {
+          console.log("jwt Secret", privateKey)
+          const token = jwt.sign(req.body, privateKey, {
             expiresIn: tokenExpirationInSeconds,
           })
           return res.status(200).json({
@@ -78,6 +82,21 @@ class UserController {
     } catch (e) {
       next(e)
     }
+  }
+
+  async createUser(data: IUser) {
+    try {
+      const user = userMongooseSchema.build(data)
+      await user.save()
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  async findUserByEmail(email: string) {
+    return userMongooseSchema.findOne({
+      email: email,
+    }).exec()
   }
 }
 export default new UserController()
