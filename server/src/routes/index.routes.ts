@@ -1,3 +1,6 @@
-import user from './user.routes'
+import express from 'express';
+import { userRoutes } from './user.routes';
 
-export default [user]
+export const routes = express.Router();
+
+routes.use(userRoutes);

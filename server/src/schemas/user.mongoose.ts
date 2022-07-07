@@ -49,7 +49,7 @@ const userSchema: Schema = new mongoose.Schema(
   {
     // user password is deleted when returning to FE
     toJSON: {
-      transform: function (doc, ret) {
+      transform: (doc, ret) => {
         delete ret.password
       },
     },

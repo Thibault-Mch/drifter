@@ -1,8 +1,11 @@
-export interface IUser {
+export interface ILogin {
+  email: string,
+  password: string,
+}
+
+export interface IUser extends ILogin {
   _id?: string;
-  email: string;
-  password?: string;
-  username: string;
+  username?: string;
   creationDate?: string;
   modificationDate?: string;
 }

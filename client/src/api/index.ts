@@ -1,6 +1,6 @@
 import user from './user'
 
 export default {
-  getUsers: user.getUsers,
+  login: user.login,
   createUser: user.createUser
 }

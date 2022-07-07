@@ -18,3 +18,5 @@ export class Password {
     return buf.toString("hex") === hashedPassword;
   }
 }
+
+export default new Password()

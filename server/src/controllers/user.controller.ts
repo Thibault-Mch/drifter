@@ -35,7 +35,9 @@ class UserController {
             creationDate,
             modificationDate
           })
-          const token = jwt.sign({ username, password }, privateKey, {
+          // don't send real password in token
+          const hashedPassword = newUser?.password
+          const token = jwt.sign({ username, hashedPassword }, privateKey, {
             expiresIn: tokenExpirationInSeconds,
           })
           return res.status(200).json({

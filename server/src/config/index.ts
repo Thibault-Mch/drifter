@@ -1,7 +1,7 @@
 
 import express from "express";
 import mongoose from "mongoose";
-import routes from "../routes/index.routes"
+import { routes } from "../routes/index.routes"
 
 const PORT = process.env.PORT || 3001;
 
