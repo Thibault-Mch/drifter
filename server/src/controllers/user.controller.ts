@@ -9,7 +9,7 @@ import { Password } from "../middleware/auth.middleware"
 import * as fs from 'fs';
 import * as path from 'path';
 
-const privateKey = fs.readFileSync(path.join(__dirname, '../../../private.key'));
+const privateKey = fs.readFileSync(path.join(__dirname, '../../../.private.key'));
 const tokenExpirationInSeconds = 36000
 const log: IDebugger = debug("user:controller")
 class UserController {
