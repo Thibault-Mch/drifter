@@ -34,8 +34,6 @@ const signup = async (data: IUser) => {
 
 const saveToken = async (token: string) => {
   await SecureStore.setItemAsync("loginToken", token);
-  let result = await SecureStore.getItemAsync("loginToken")
-  console.log("my token", result)
 }
 
 // const loggedIn = async (token: string) => {

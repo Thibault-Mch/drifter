@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken"
 import * as fs from 'fs';
 import * as path from 'path';
 
-const privateKey = fs.readFileSync(path.join(__dirname, '../../private.key'));
+const privateKey = fs.readFileSync(path.join(__dirname, '../../../private.key'));
 const log: IDebugger = debug("middleware:JWT")
 
 class JWT {

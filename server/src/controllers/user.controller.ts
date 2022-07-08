@@ -69,7 +69,6 @@ class UserController {
         if (!isPasswordMatch) {
           throw new Error("Invalid Password")
         } else {
-          console.log("jwt Secret", privateKey)
           const token = jwt.sign(req.body, privateKey, {
             expiresIn: tokenExpirationInSeconds,
           })
