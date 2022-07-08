@@ -2,16 +2,19 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import api from "./src/api/index"
 import { IUser } from '../server/src/interfaces/user.interface'
+
 export default function App() {
-  const createUser = async () => {
+  const signup = async () => {
     const dataToSend: IUser = {
-      username: "Joseph2", password: "123456", email: "test@test2.com"
+      username: "Joseph3", password: "123456", email: "test@test3.com"
     }
-    console.log(await api.createUser(dataToSend))
+    console.log(await api.signup(dataToSend))
   }
 
-  const fetchUsers = async () => {
-    console.log(await api.getUsers())
+  const login = async () => {
+    console.log(await api.login({
+      password: "123456", email: "test@test3.com"
+    }))
   }
 
 
@@ -21,12 +24,12 @@ export default function App() {
       <Text>nemnlw try</Text>
       <StatusBar style="auto" />
       <Button
-        onPress={createUser}
+        onPress={signup}
         title="Create user"
         color="#841584"
         accessibilityLabel="Learn more about this purple button"
       />
-      <Button onPress={fetchUsers} title="Get Users" />
+      <Button onPress={login} title="login" />
     </View>
   );
 }

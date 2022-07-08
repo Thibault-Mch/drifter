@@ -35,7 +35,9 @@ class UserController {
             creationDate,
             modificationDate
           })
-          const token = jwt.sign({ username, password }, privateKey, {
+          // don't send real password in token
+          const hashedPassword = newUser?.password
+          const token = jwt.sign({ username, hashedPassword }, privateKey, {
             expiresIn: tokenExpirationInSeconds,
           })
           return res.status(200).json({
@@ -67,7 +69,6 @@ class UserController {
         if (!isPasswordMatch) {
           throw new Error("Invalid Password")
         } else {
-          console.log("jwt Secret", privateKey)
           const token = jwt.sign(req.body, privateKey, {
             expiresIn: tokenExpirationInSeconds,
           })

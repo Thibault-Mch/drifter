@@ -10,5 +10,5 @@ dist
 
 # protect sensible data
 .env
-private.key
-public.key
+../private.key
+../public.key

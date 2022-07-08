@@ -11,7 +11,7 @@ class JWT {
   authenticateJWT(req: Request, res: Response, next: NextFunction) {
     const authHeader = req.headers.authorization
     if (authHeader && authHeader !== "null") {
-      // const token = authHeader.split(" ")[1];
+      // const token = authHeader.split(" ")[1]; this if different tokens
       log("auth Header", privateKey)
       jwt.verify(authHeader, privateKey, (err: any, user: any) => {
         if (err) {
@@ -20,11 +20,11 @@ class JWT {
             .status(403)
             .send({ success: false, message: "Token Expired" })
         }
-        // req.user = user
+        console.log("you are logged in")
         next()
       })
     } else {
-      res.status(403).json({ success: false, message: "UnAuthorized" })
+      res.status(403).json({ success: false, message: "You are not logged in" })
     }
   }
 }
