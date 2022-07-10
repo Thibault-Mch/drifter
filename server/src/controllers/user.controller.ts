@@ -3,7 +3,6 @@ import userMongooseSchema from "../schemas/user.mongoose";
 import { v4 as uuidv4 } from 'uuid';
 import { IUser } from '../interfaces/user.interface'
 import { NextFunction, Request, Response } from "express"
-import debug, { IDebugger } from "debug"
 import jwt from "jsonwebtoken"
 import { Password } from "../middleware/auth.middleware"
 import * as fs from 'fs';
@@ -11,7 +10,7 @@ import * as path from 'path';
 
 const privateKey = fs.readFileSync(path.join(__dirname, '../../../.private.key'));
 const tokenExpirationInSeconds = 36000
-const log: IDebugger = debug("user:controller")
+
 class UserController {
   async signup(request: Request, res: Response, next: NextFunction) {
     try {
@@ -22,7 +21,6 @@ class UserController {
       const creationDate: string = new Date().toISOString();
       const modificationDate: string = new Date().toISOString();
       const user = await this.findUserByEmail(email)
-      log("user", user)
       if (user) {
         throw new Error("User Already Exists")
       } else {
