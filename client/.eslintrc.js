@@ -32,12 +32,15 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/strict-boolean-expressions': 'off',
     '@typescript-eslint/no-floating-promises': 'off',
-    '@typescript-eslint/no-unused-vars': 'off',
-    // 'react/jsx-curly-spacing': ['error', {
-    //   when: 'always',
-    //   allowMultiline: true,
-    //   children: true
-    // }],
+    "@typescript-eslint/no-misused-promises": [
+      "error",
+      {
+        "checksVoidReturn": {
+          "arguments": false,
+          "attributes": false
+        }
+      }
+    ],
     'eol-last': ['error', 'always'],
     'no-multiple-empty-lines': 'error',
   },
