@@ -1,10 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import React, { StyleSheet, Text, View, Button } from 'react-native';
 import api from "./src/api/index"
 import { IUser } from '../server/src/interfaces/user.interface'
 
 export default function App() {
-  const signup = async () => {
+  const signUp = async () => {
     const dataToSend: IUser = {
       username: "Joseph3", password: "123456", email: "test@test3.com"
     }
@@ -17,14 +17,12 @@ export default function App() {
     }))
   }
 
-
-
   return (
     <View style={styles.container}>
       <Text>nemnlw try</Text>
       <StatusBar style="auto" />
       <Button
-        onPress={signup}
+        onPress={signUp}
         title="Create user"
         color="#841584"
         accessibilityLabel="Learn more about this purple button"
