@@ -1,37 +1,64 @@
-import * as React from 'react';
-import { useState } from 'react';
+import React from 'react';
+import { Button, StyleSheet, Text, View } from 'react-native';
 
-import { SafeAreaView, StyleSheet, TextInput } from "react-native";
+export interface Props {
+  name: string;
+  baseEnthusiasmLevel?: number;
+};
 
-const UselessTextInput = () => {
-  const [text, onChangeText] = React.useState("Useless Text");
-  const [number, onChangeNumber] = React.useState(null);
+const Hello: React.FC<Props> = ({
+  name,
+  baseEnthusiasmLevel = 0
+}) => {
+  const [enthusiasmLevel, setEnthusiasmLevel] = React.useState(
+    baseEnthusiasmLevel
+  );
+
+  const onIncrement = () =>
+    setEnthusiasmLevel(enthusiasmLevel + 1);
+  const onDecrement = () =>
+    setEnthusiasmLevel(
+      enthusiasmLevel > 0 ? enthusiasmLevel - 1 : 0
+    );
+
+  const getExclamationMarks = (numChars: number) =>
+    numChars > 0 ? Array(numChars + 1).join('!') : '';
 
   return (
-    <SafeAreaView>
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangeText}
-        value={text}
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangeNumber}
-        value={number}
-        placeholder="useless placeholder"
-        keyboardType="numeric"
-      />
-    </SafeAreaView>
+    <View style={styles.container}>
+      <Text style={styles.greeting}>
+        Hello {name}
+        {getExclamationMarks(enthusiasmLevel)}
+      </Text>
+      <View>
+        <Button
+          title="Increase enthusiasm"
+          accessibilityLabel="increment"
+          onPress={onIncrement}
+          color="blue"
+        />
+        <Button
+          title="Decrease enthusiasm"
+          accessibilityLabel="decrement"
+          onPress={onDecrement}
+          color="red"
+        />
+      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
+  greeting: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    margin: 16
+  }
 });
 
-export default UselessTextInput;
+export default Hello;

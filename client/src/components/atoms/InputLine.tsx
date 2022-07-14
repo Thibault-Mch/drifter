@@ -1,7 +1,6 @@
 import React, { FC } from 'react'
 import { View, Text, StyleSheet, TextInput, TextInputProps } from 'react-native';
 
-interface Props extends
 
 const FormField: FC = (props: TextInputProps) => {
   return <>(
