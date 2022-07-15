@@ -1,36 +1,27 @@
-import React, { FC } from 'react'
-import { View, Text, StyleSheet, TextInput, TextInputProps } from 'react-native';
+import React, { useState, FC } from "react";
+import { SafeAreaView, StyleSheet, TextInput } from "react-native";
 
+const UselessTextInput: FC = () => {
+  const [text, onChangeText] = useState("Useless Text");
 
-const FormField: FC = (props: TextInputProps) => {
-  return <>(
-    <View style={styles.formFieldWrapper}>
-      <Text style={styles.labelText}>{props.label}</Text>
+  return (
+    <SafeAreaView>
       <TextInput
-        placeholder={props.placeholder}
-        style={styles.formFieldText}
-        onChange={(event) => props.handleFormValueChange(props.formKey, event.nativeEvent.text)}
-        {...props.textInputProps}
+        style={styles.input}
+        onChangeText={onChangeText}
+        value={text}
       />
-    </View>
-    )</>
-}
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
-  formFieldWrapper: {
-  },
-  formFieldText: {
-    fontSize: 20,
-    borderRadius: 15,
+  input: {
+    height: 40,
+    margin: 12,
     borderWidth: 1,
-    padding: 12
+    padding: 10,
   },
-  labelText: {
-    fontSize: 20,
-    marginBottom: 12,
-    paddingLeft: 10,
-    paddingTop: 10
-  }
-})
+});
 
-export default FormField;
+export default UselessTextInput;
