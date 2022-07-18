@@ -1,37 +1,46 @@
-import React, { useState, useEffect, FC } from "react";
-import { SafeAreaView, StyleSheet, TextInput } from "react-native";
+import React, { FC } from 'react'
+import { View, Text, StyleSheet, TextInput } from 'react-native';
 
-const UselessTextInput: FC = () => {
-  const [text, onChangeText] = useState<string>("Useless Text");
-  const [number, onChangeNumber] = useState<string>("");
-  useEffect(() => {
-    onChangeText('hello')
-  }, []);
+interface InputLineProps {
+  label: string,
+  value: string,
+  placeholder: string,
+  formKey: string,
+  onChangeText: () => void,
+  secureTextEntry: boolean | undefined
+}
+
+const InputLine: FC<InputLineProps> = (props) => {
   return (
-    <SafeAreaView>
+    <View style={styles.InputLineWrapper}>
+      <Text style={styles.labelText}>{props.label}</Text>
       <TextInput
-        style={styles.input}
-        onChangeText={onChangeText}
-        value={text}
+        placeholder={props.placeholder}
+        style={styles.InputLineText}
+        onChangeText={props.onChangeText}
+        secureTextEntry={props.secureTextEntry}
+        autoCorrect={false}
+        value={props.value}
       />
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangeNumber}
-        value={number}
-        placeholder="useless placeholder"
-        keyboardType="numeric"
-      />
-    </SafeAreaView>
-  );
-};
+    </View>
+  )
+}
 
 const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
+  InputLineWrapper: {
   },
-});
+  InputLineText: {
+    fontSize: 20,
+    borderRadius: 15,
+    borderWidth: 1,
+    padding: 12
+  },
+  labelText: {
+    fontSize: 20,
+    marginBottom: 12,
+    paddingLeft: 10,
+    paddingTop: 10
+  }
+})
 
-export default UselessTextInput;
+export default InputLine;
