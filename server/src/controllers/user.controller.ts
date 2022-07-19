@@ -8,7 +8,7 @@ import { Password } from "../middleware/auth.middleware"
 import * as fs from 'fs';
 import * as path from 'path';
 
-const privateKey = fs.readFileSync(path.join(__dirname, '../../../.private.key'));
+const privateKey = fs.readFileSync(path.join(__dirname, '../../../private.key'));
 const tokenExpirationInSeconds = 36000
 
 class UserController {
@@ -61,7 +61,7 @@ class UserController {
       const email = req.body.email
       const password = req.body.password
       const user = await this.findUserByEmail(email)
-      log("user", user)
+      console.log("user", user)
       if (user && user.password) {
         const isPasswordMatch = await Password.compare(user.password, password)
         if (!isPasswordMatch) {
@@ -77,7 +77,7 @@ class UserController {
           })
         }
       } else {
-        log("User Not Found")
+        console.log("User Not Found")
         throw new Error("User Not Found")
       }
     } catch (e) {

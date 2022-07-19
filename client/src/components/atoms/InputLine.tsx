@@ -3,11 +3,10 @@ import { View, Text, StyleSheet, TextInput } from 'react-native';
 
 interface InputLineProps {
   label: string,
-  value: string,
+  value?: string,
   placeholder: string,
-  formKey: string,
-  onChangeText: () => void,
-  secureTextEntry: boolean | undefined
+  onChangeInput: (value: string) => void,
+  secureTextEntry?: boolean | undefined
 }
 
 const InputLine: FC<InputLineProps> = (props) => {
@@ -17,7 +16,7 @@ const InputLine: FC<InputLineProps> = (props) => {
       <TextInput
         placeholder={props.placeholder}
         style={styles.InputLineText}
-        onChangeText={props.onChangeText}
+        onChangeText={props.onChangeInput}
         secureTextEntry={props.secureTextEntry}
         autoCorrect={false}
         value={props.value}

@@ -1,42 +1,16 @@
-import { StatusBar } from 'expo-status-bar';
-import React, { StyleSheet, Text, View, Button } from 'react-native';
-import api from "./src/api/index"
-import { IUser } from '../server/src/interfaces/user.interface'
+import React from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import Registration from './src/views/Registration';
 export default function App() {
-  const signUp = async () => {
-    const dataToSend: IUser = {
-      username: "Joseph3", password: "123456", email: "test@test3.com"
-    }
-    console.log(await api.signup(dataToSend))
-  }
-
-  const login = async () => {
-    console.log(await api.login({
-      password: "123456", email: "test@test3.com"
-    }))
-  }
+  const Stack = createNativeStackNavigator();
 
   return (
-    <View style={styles.container}>
-      <Text>nemnlw try</Text>
-      <StatusBar style="auto" />
-      <Button
-        onPress={signUp}
-        title="Create user"
-        color="#841584"
-        accessibilityLabel="Learn more about this purple button"
-      />
-      <Button onPress={login} title="login" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Registration" component={Registration} />
+      </Stack.Navigator>
+    </NavigationContainer >
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

@@ -1,64 +1,33 @@
-import React from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Text, View, Button } from 'react-native'
+import React, { useState } from 'react'
+import api from '../api/index'
 
-export interface Props {
-  name: string;
-  baseEnthusiasmLevel?: number;
-};
+import InputLine from '../components/atoms/InputLine'
 
-const Hello: React.FC<Props> = ({
-  name,
-  baseEnthusiasmLevel = 0
-}) => {
-  const [enthusiasmLevel, setEnthusiasmLevel] = React.useState(
-    baseEnthusiasmLevel
-  );
+const Registration = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [isSignUp, setIsSignUp] = useState(true)
 
-  const onIncrement = () =>
-    setEnthusiasmLevel(enthusiasmLevel + 1);
-  const onDecrement = () =>
-    setEnthusiasmLevel(
-      enthusiasmLevel > 0 ? enthusiasmLevel - 1 : 0
-    );
-
-  const getExclamationMarks = (numChars: number) =>
-    numChars > 0 ? Array(numChars + 1).join('!') : '';
-
-  return (
-    <View style={styles.container}>
-      <Text style={styles.greeting}>
-        Hello {name}
-        {getExclamationMarks(enthusiasmLevel)}
-      </Text>
-      <View>
-        <Button
-          title="Increase enthusiasm"
-          accessibilityLabel="increment"
-          onPress={onIncrement}
-          color="blue"
-        />
-        <Button
-          title="Decrease enthusiasm"
-          accessibilityLabel="decrement"
-          onPress={onDecrement}
-          color="red"
-        />
-      </View>
-    </View>
-  );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  greeting: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    margin: 16
+  const sendRegistration = async () => {
+    if (isSignUp) {
+      await api.signup({ username, password, email })
+    } else {
+      await api.login({ email, password })
+    }
   }
-});
+  return (
+    <View>
+      <Text>Registration</Text>
+      <InputLine label='Your email' placeholder='Email' onChangeInput={setEmail} />
+      {isSignUp && <InputLine label='Your username' placeholder='Username' onChangeInput={setUsername} />}
+      <InputLine label='Your password' placeholder='Password' onChangeInput={setPassword} secureTextEntry />
+      {/* onPress takes a function bc the prop type passed to InputLine is void */}
+      <Button title="Login" onPress={async () => await sendRegistration()} />
+      <Button title={isSignUp ? 'Go to login' : 'Go to signup'} onPress={() => setIsSignUp(!isSignUp)} />
+    </View>
+  )
+}
 
-export default Hello;
+export default Registration
