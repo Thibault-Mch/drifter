@@ -2,33 +2,42 @@ import React, { FC } from 'react'
 import { View, Text, StyleSheet, TextInput } from 'react-native';
 
 interface InputLineProps {
-  label: string,
-  value?: string,
-  placeholder: string,
-  onChangeInput: (value: string) => void,
-  secureTextEntry?: boolean | undefined
+  label: string;
+  value?: string;
+  placeholder: string;
+  onChangeInput: (value: string) => void;
+  secureTextEntry?: boolean | undefined;
+  onBlur?: () => void;
+  error?: boolean;
+  errorDetails?: string;
 }
 
 const InputLine: FC<InputLineProps> = (props) => {
   return (
-    <View style={styles.InputLineWrapper}>
+    <View style={styles.inputLineWrapper}>
       <Text style={styles.labelText}>{props.label}</Text>
       <TextInput
         placeholder={props.placeholder}
-        style={styles.InputLineText}
+        style={styles.inputLineText}
         onChangeText={props.onChangeInput}
         secureTextEntry={props.secureTextEntry}
         autoCorrect={false}
         value={props.value}
       />
+      {!!props.errorDetails && (
+        <Text style={styles.errorMessage} >
+          {props.errorDetails}
+        </Text>
+      )}
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  InputLineWrapper: {
+  inputLineWrapper: {
+    padding: 8
   },
-  InputLineText: {
+  inputLineText: {
     fontSize: 20,
     borderRadius: 15,
     borderWidth: 1,
@@ -39,6 +48,9 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     paddingLeft: 10,
     paddingTop: 10
+  },
+  errorMessage: {
+    color: 'red'
   }
 })
 
