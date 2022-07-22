@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Text, View, Button } from 'react-native'
-import InputLine from '../components/atoms/InputLine'
+import InputLine from '@components/atoms/InputLine'
 // import api from '../api/index'
 
-import { IUser } from '../../../server/src/interfaces/user.interface'
+import { IUser } from '@interfaces/user.interface'
 import { useForm, Controller } from 'react-hook-form'
 
 import * as Yup from "yup";
@@ -27,7 +27,7 @@ const Registration = () => {
   const { control,
     handleSubmit,
     formState: { errors }, } = useForm<IUser>({
-      mode: "onBlur",
+      mode: "onSubmit",
       resolver: yupResolver(validationSchema)
     })
 
