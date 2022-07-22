@@ -10,6 +10,16 @@ module.exports = function (api) {
           path: ".env",
         },
       ],
+      [
+        "module-resolver",
+        {
+          alias: {
+            // This needs to be mirrored in tsconfig.json
+            "@components": "./src/components",
+            "@interfaces": "../server/src/interfaces"
+          },
+        },
+      ],
     ],
   };
 };

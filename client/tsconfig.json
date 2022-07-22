@@ -13,13 +13,13 @@
     "noEmit": true,
     "strict": true,
     "target": "esnext",
-    "baseUrl": "src",
+    "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "*"
+      "@components/*": [
+        "src/components/*"
       ],
       "@interfaces/*": [
-        "../../server/src/interfaces/*"
+        "../server/src/interfaces/*"
       ]
     },
   },

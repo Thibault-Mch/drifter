@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Text, View, Button } from 'react-native'
-import InputLine from '@/components/atoms/InputLine'
+import InputLine from '@components/atoms/InputLine'
 // import api from '../api/index'
 
 import { IUser } from '@interfaces/user.interface'
