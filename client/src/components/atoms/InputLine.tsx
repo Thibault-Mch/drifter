@@ -10,6 +10,7 @@ interface InputLineProps {
   onBlur?: () => void;
   error?: boolean;
   errorDetails?: string;
+  autoCapitalize?: string;
 }
 
 const InputLine: FC<InputLineProps> = (props) => {
@@ -22,6 +23,7 @@ const InputLine: FC<InputLineProps> = (props) => {
         onChangeText={props.onChangeInput}
         secureTextEntry={props.secureTextEntry}
         autoCorrect={false}
+        autoCapitalize='none'
         value={props.value}
       />
       {!!props.errorDetails && (
