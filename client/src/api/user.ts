@@ -1,6 +1,6 @@
 import axios from "axios";
 import { API_URL_LOCAL } from "@env"
-import { IUser, ILogin } from '../../../server/src/interfaces/user.interface'
+import { ILogin } from '../../../server/src/interfaces/user.interface'
 import * as SecureStore from 'expo-secure-store';
 
 const login = async (loginData: ILogin) => {
@@ -19,7 +19,7 @@ const login = async (loginData: ILogin) => {
   }
 }
 
-const signup = async (data: IUser) => {
+const signup = async (data: ILogin) => {
   try {
     const res = await axios.post(`${API_URL_LOCAL}/signup`, data)
     return res.data

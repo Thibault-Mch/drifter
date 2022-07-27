@@ -1,12 +1,12 @@
 export interface ILogin {
-  email: string,
-  password: string,
+  email?: string,
+  password?: string,
+  username: string;
 }
 
 export interface IUser extends ILogin {
-  _id?: string;
-  username?: string;
-  creationDate?: string;
-  modificationDate?: string;
+  _id: string;
+  creationDate: string;
+  modificationDate: string;
 }
 
