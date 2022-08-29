@@ -19,7 +19,7 @@ import Registration from './src/views/Registration';
 
 export default function App() {
   const Stack = createNativeStackNavigator();
-
+  // move this into dedicated file
   const [fontsLoaded] = useFonts({
     Lato_100Thin,
     Lato_100Thin_Italic,

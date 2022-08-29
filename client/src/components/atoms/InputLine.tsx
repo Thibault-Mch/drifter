@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { View, Text, StyleSheet, TextInput } from 'react-native';
-import globalStyles from "@styles/globalStyles"
-import colors from "@styles/colors"
+import globalStyles from "@src/styles/globalStyles"
+import colors from "@src/styles/colors"
 
 interface InputLineProps {
   label: string;

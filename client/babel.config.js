@@ -16,7 +16,8 @@ module.exports = function (api) {
           alias: {
             // This needs to be mirrored in tsconfig.json
             "@components": "./src/components",
-            "@interfaces": "../server/src/interfaces"
+            "@src": "./src",
+            "@interfaces": "../server/src/interfaces",
           },
         },
       ],

@@ -15,7 +15,7 @@ module.exports = {
     'ecmaFeatures': {
       'jsx': true
     },
-    'project': './client/tsconfig.json'
+    'project': './tsconfig.json'
   },
   env: {
     'react-native/react-native': true

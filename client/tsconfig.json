@@ -14,12 +14,13 @@
     "strict": true,
     "target": "esnext",
     "baseUrl": ".",
+    // has to be mirrored in babel config 
     "paths": {
       "@components/*": [
         "src/components/*"
       ],
-      "@styles/*": [
-        "src/styles/*"
+      "@src/*": [
+        "src/*"
       ],
       "@interfaces/*": [
         "../server/src/interfaces/*"
