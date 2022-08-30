@@ -48,13 +48,9 @@ const styles = StyleSheet.create({
     padding: 12,
     borderColor: colors.washedWhite,
   },
-  labelText: {
-    marginBottom: 12,
-    paddingLeft: 10,
-    paddingTop: 10
-  },
+
   errorMessage: {
-    color: 'red'
+    color: colors.redError
   }
 })
 

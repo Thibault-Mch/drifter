@@ -8,7 +8,8 @@ import { useForm, Controller } from 'react-hook-form'
 
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-
+import colors from "@src/styles/colors"
+import globalStyles from "@src/styles/globalStyles"
 const Registration = () => {
 
   const validationSchema = Yup.object({
@@ -43,8 +44,7 @@ const Registration = () => {
   }
 
   return (
-    <View>
-      <Text>Registration</Text>
+    <View style={globalStyles.container}>
       <Controller
         control={control}
         name="email"
@@ -104,13 +104,14 @@ const Registration = () => {
         )}
       />
       {errors && Object.keys(errors).length > 0 && (
-        <Text>
+        <Text style={{ color: colors.redError }}>
           Please fill all the fields
         </Text>
-      )}
+      )
+      }
       <Button title={isSignUp ? 'Sign up' : 'Login'} onPress={handleSubmit(sendRegistration)} />
       <Button title={isSignUp ? 'Go to login' : 'Go to signup'} onPress={() => setIsSignUp(!isSignUp)} />
-    </View>
+    </View >
   )
 }
 
