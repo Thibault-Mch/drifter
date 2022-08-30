@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Text, View, Button } from 'react-native'
+import { Text, View, Button, StyleSheet } from 'react-native'
 import InputLine from '@components/atoms/InputLine'
 // import api from '../api/index'
 
@@ -8,7 +8,8 @@ import { useForm, Controller } from 'react-hook-form'
 
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-
+import colors from "@src/styles/colors"
+import globalStyles from "@src/styles/globalStyles"
 const Registration = () => {
 
   const validationSchema = Yup.object({
@@ -43,8 +44,8 @@ const Registration = () => {
   }
 
   return (
-    <View>
-      <Text>Registration</Text>
+    <View style={globalStyles.container}>
+      <Text style={[globalStyles.baseFont, styles.title]}>Drifter</Text>
       <Controller
         control={control}
         name="email"
@@ -104,14 +105,24 @@ const Registration = () => {
         )}
       />
       {errors && Object.keys(errors).length > 0 && (
-        <Text>
+        <Text style={{ color: colors.redError }}>
           Please fill all the fields
         </Text>
-      )}
+      )
+      }
       <Button title={isSignUp ? 'Sign up' : 'Login'} onPress={handleSubmit(sendRegistration)} />
       <Button title={isSignUp ? 'Go to login' : 'Go to signup'} onPress={() => setIsSignUp(!isSignUp)} />
-    </View>
+    </View >
   )
 }
+
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 32,
+    color: 'white',
+    textAlign: 'center',
+    fontFamily: 'Lato_700Bold'
+  }
+})
 
 export default Registration

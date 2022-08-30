@@ -1,5 +1,7 @@
 import React, { FC } from 'react'
 import { View, Text, StyleSheet, TextInput } from 'react-native';
+import globalStyles from "@src/styles/globalStyles"
+import colors from "@src/styles/colors"
 
 interface InputLineProps {
   label: string;
@@ -16,10 +18,10 @@ interface InputLineProps {
 const InputLine: FC<InputLineProps> = (props) => {
   return (
     <View style={styles.inputLineWrapper}>
-      <Text style={styles.labelText}>{props.label}</Text>
       <TextInput
         placeholder={props.placeholder}
-        style={styles.inputLineText}
+        style={[styles.inputLineText, globalStyles.baseFont]}
+        placeholderTextColor={colors.washedWhite}
         onChangeText={props.onChangeInput}
         secureTextEntry={props.secureTextEntry}
         autoCorrect={false}
@@ -41,18 +43,14 @@ const styles = StyleSheet.create({
   },
   inputLineText: {
     fontSize: 20,
-    borderRadius: 15,
+    borderRadius: 5,
     borderWidth: 1,
-    padding: 12
+    padding: 12,
+    borderColor: colors.washedWhite,
   },
-  labelText: {
-    fontSize: 20,
-    marginBottom: 12,
-    paddingLeft: 10,
-    paddingTop: 10
-  },
+
   errorMessage: {
-    color: 'red'
+    color: colors.redError
   }
 })
 
