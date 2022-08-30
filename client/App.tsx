@@ -1,7 +1,6 @@
 import React from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Constants from 'expo-constants';
 
 import {
   useFonts,
