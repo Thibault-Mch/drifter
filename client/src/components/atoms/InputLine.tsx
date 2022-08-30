@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   },
   inputLineText: {
     fontSize: 20,
-    borderRadius: 15,
+    borderRadius: 5,
     borderWidth: 1,
     padding: 12,
     borderColor: colors.washedWhite,

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Text, View, Button } from 'react-native'
+import { Text, View, Button, StyleSheet } from 'react-native'
 import InputLine from '@components/atoms/InputLine'
 // import api from '../api/index'
 
@@ -45,6 +45,7 @@ const Registration = () => {
 
   return (
     <View style={globalStyles.container}>
+      <Text style={[globalStyles.baseFont, styles.title]}>Drifter</Text>
       <Controller
         control={control}
         name="email"
@@ -114,5 +115,14 @@ const Registration = () => {
     </View >
   )
 }
+
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 32,
+    color: 'white',
+    textAlign: 'center',
+    fontFamily: 'Lato_700Bold'
+  }
+})
 
 export default Registration
