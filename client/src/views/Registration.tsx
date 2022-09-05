@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
-import { Text, View, Button, StyleSheet } from 'react-native'
+import { Text, View, Pressable, StyleSheet } from 'react-native'
 import InputLine from '@components/atoms/InputLine'
-// import api from '../api/index'
+import api from '../api/index'
 
 import { IUser } from '@interfaces/user.interface'
 import { useForm, Controller } from 'react-hook-form'
 
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import colors from "@src/styles/colors"
-import globalStyles from "@src/styles/globalStyles"
+import { globalStyles, colors } from "@src/styles/index"
+import { AFTER_FIRST_UNLOCK } from 'expo-secure-store'
 const Registration = () => {
 
   const validationSchema = Yup.object({
@@ -20,9 +20,9 @@ const Registration = () => {
     password: Yup.string()
       .min(6, "Your  password needs to be minimum 6 characters")
       .required("Please enter your password"),
-    // confirmPassword: Yup.string()
-    //   .required("Please confirm you")
-    //   .oneOf([Yup.ref("password")], "Les mots de passe ne correspondent pas"),
+    confirmPassword: Yup.string()
+      .required("Please confirm you")
+      .oneOf([Yup.ref("password")], "Les mots de passe ne correspondent pas"),
   }).required();
 
   const { control,
@@ -35,12 +35,11 @@ const Registration = () => {
   const [isSignUp, setIsSignUp] = useState(true)
 
   const sendRegistration = async (data: IUser) => {
-    console.log(data)
-    // if (isSignUp) {
-    //   await api.signup({ username, password, email })
-    // } else {
-    //   await api.login({ email, password })
-    // }
+    if (isSignUp) {
+      await api.signup(data)
+    } else {
+      await api.login(data)
+    }
   }
 
   return (
@@ -110,8 +109,9 @@ const Registration = () => {
         </Text>
       )
       }
-      <Button title={isSignUp ? 'Sign up' : 'Login'} onPress={handleSubmit(sendRegistration)} />
-      <Button title={isSignUp ? 'Go to login' : 'Go to signup'} onPress={() => setIsSignUp(!isSignUp)} />
+      <Pressable style={styles.buttonPrimary} onPress={handleSubmit(sendRegistration)}><Text style={{ color: colors.tifBlue }}>{isSignUp ? 'Sign up' : 'Login'}</Text></Pressable>
+      <Pressable style={styles.buttonPrimary} onPress={() => setIsSignUp(!isSignUp)}><Text style={{ color: colors.tifBlue }}>{isSignUp ? 'Go to login' : 'Go to signup'}</Text></Pressable>
+
     </View >
   )
 }
@@ -122,6 +122,21 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     fontFamily: 'Lato_700Bold'
+  },
+  buttonPrimary: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    paddingVertical: 12,
+    width: 120,
+    // paddingHorizontal: 32,
+    borderRadius: 4,
+    color: colors.tifBlue,
+    borderColor: colors.tifBlue,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    backgroundColor: colors.lighterBlack,
+
   }
 })
 

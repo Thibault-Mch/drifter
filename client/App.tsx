@@ -40,7 +40,9 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home" screenOptions={{ contentStyle: { backgroundColor: '#131313' }, headerShown: false }} >
+      <Stack.Navigator initialRouteName="Home" screenOptions={{
+        contentStyle: { backgroundColor: '#131313' }, headerShown: false
+      }} >
         <Stack.Screen name="Registration" component={Registration} />
       </Stack.Navigator>
     </NavigationContainer >

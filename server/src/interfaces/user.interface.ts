@@ -1,7 +1,7 @@
 export interface ILogin {
-  email?: string,
-  password?: string,
-  username: string;
+  email: string,
+  password: string,
+  username?: string;
 }
 
 export interface IUser extends ILogin {
