@@ -47,7 +47,7 @@ const Registration = () => {
   return (
     <View style={[globalStyles.container, { flexDirection: "column", flex: 1 }]}>
       <Text style={[globalStyles.baseFont, styles.title]}>Drifter</Text>
-      <View style={{ flex: 2, justifyContent: 'space-between' }}>
+      <View style={{ flex: 2, justifyContent: isSignUp ? 'space-between' : 'space-evenly' }}>
         <Controller
           control={control}
           name="email"
@@ -113,7 +113,7 @@ const Registration = () => {
       <View style={{ flex: 2, justifyContent: 'space-evenly' }}>
         <Pressable style={globalStyles.buttonPrimary} onPress={handleSubmit(sendRegistration)}><Text style={globalStyles.textBtnPrimary}>{isSignUp ? 'Sign up' : 'Login'}</Text></Pressable>
         <Text style={globalStyles.baseFont}>Credentials forgotten ? </Text>
-        {!isSignUp && <Text style={globalStyles.baseFont}>Don't have an account ?</Text>}
+        {!isSignUp && <Text style={[globalStyles.baseFont, { textAlign: 'center' }]}>Don't have an account ?</Text>}
         <Text onPress={() => setIsSignUp(!isSignUp)} style={[globalStyles.baseFont, styles.toggleSignupLogin]}>{isSignUp ? 'Go to login!' : 'Go to signup!'}</Text>
       </View>
 
