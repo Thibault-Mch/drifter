@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-inline-styles */
+
 import React, { useState } from 'react'
 import { Text, View, Pressable, StyleSheet } from 'react-native'
 import InputLine from '@components/atoms/InputLine'
@@ -9,7 +11,7 @@ import { useForm, Controller } from 'react-hook-form'
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { globalStyles, colors } from "@src/styles/index"
-import { AFTER_FIRST_UNLOCK } from 'expo-secure-store'
+
 const Registration = () => {
 
   const validationSchema = Yup.object({
@@ -43,74 +45,77 @@ const Registration = () => {
   }
 
   return (
-    <View style={globalStyles.container}>
+    <View style={[globalStyles.container, { flexDirection: "column", flex: 1 }]}>
       <Text style={[globalStyles.baseFont, styles.title]}>Drifter</Text>
-      <Controller
-        control={control}
-        name="email"
-        render={({
-          field: { onChange, value, onBlur },
-          fieldState: { error },
-        }) => (
-          <InputLine
-            label='Your email'
-            placeholder='Email'
-            onChangeInput={onChange}
-            value={value}
-            onBlur={onBlur}
-            error={!!error}
-            errorDetails={error?.message}
-          />
-
-        )}
-      />
-      {isSignUp && <Controller
-        control={control}
-        name="username"
-        render={({
-          field: { onChange, value, onBlur },
-          fieldState: { error },
-        }) => (
-          <InputLine
-            label='Your username'
-            placeholder='Username'
-            onChangeInput={onChange}
-            value={value}
-            onBlur={onBlur}
-            error={!!error}
-            errorDetails={error?.message}
-          />
-
-        )}
-      />}
-      <Controller
-        control={control}
-        name="password"
-        render={({
-          field: { onChange, value, onBlur },
-          fieldState: { error },
-        }) => (
-          <InputLine
-            label='Your password'
-            placeholder='password'
-            onChangeInput={onChange}
-            value={value}
-            onBlur={onBlur}
-            error={!!error}
-            errorDetails={error?.message}
-            secureTextEntry
-          />
-
-        )}
-      />
-      {errors && Object.keys(errors).length > 0 && (
-        <Text style={{ color: colors.redError }}>
-          Please fill all the fields
-        </Text>
-      )
-      }
-      <Pressable style={styles.buttonPrimary} onPress={handleSubmit(sendRegistration)}><Text style={{ color: colors.tifBlue }}>{isSignUp ? 'Sign up' : 'Login'}</Text></Pressable>
-      <Pressable style={styles.buttonPrimary} onPress={() => setIsSignUp(!isSignUp)}><Text style={{ color: colors.tifBlue }}>{isSignUp ? 'Go to login' : 'Go to signup'}</Text></Pressable>
+      <View style={{ flex: 2, justifyContent: 'space-between' }}>
+        <Controller
+          control={control}
+          name="email"
+          render={({
+            field: { onChange, value, onBlur },
+            fieldState: { error },
+          }) => (
+            <InputLine
+              label='Your email'
+              placeholder='Email'
+              onChangeInput={onChange}
+              value={value}
+              onBlur={onBlur}
+              error={!!error}
+              errorDetails={error?.message}
+            />
+          )}
+        />
+        {isSignUp && <Controller
+          control={control}
+          name="username"
+          render={({
+            field: { onChange, value, onBlur },
+            fieldState: { error },
+          }) => (
+            <InputLine
+              label='Your username'
+              placeholder='Username'
+              onChangeInput={onChange}
+              value={value}
+              onBlur={onBlur}
+              error={!!error}
+              errorDetails={error?.message}
+            />
+          )}
+        />}
+        <Controller
+          control={control}
+          name="password"
+          render={({
+            field: { onChange, value, onBlur },
+            fieldState: { error },
+          }) => (
+            <InputLine
+              label='Your password'
+              placeholder='Password'
+              onChangeInput={onChange}
+              value={value}
+              onBlur={onBlur}
+              error={!!error}
+              errorDetails={error?.message}
+              secureTextEntry
+            />
+          )}
+        />
+        {errors && Object.keys(errors).length > 0 && (
+          <Text style={{ color: colors.redError }}>
+            Please fill all the fields
+          </Text>
+        )
+        }
+      </View>
+      <View style={{ flex: 2, justifyContent: 'space-evenly' }}>
+        <Pressable style={globalStyles.buttonPrimary} onPress={handleSubmit(sendRegistration)}><Text style={globalStyles.textBtnPrimary}>{isSignUp ? 'Sign up' : 'Login'}</Text></Pressable>
+        <Text style={globalStyles.baseFont}>Credentials forgotten ? </Text>
+        {!isSignUp && <Text style={globalStyles.baseFont}>Don't have an account ?</Text>}
+        <Text onPress={() => setIsSignUp(!isSignUp)} style={[globalStyles.baseFont, styles.toggleSignupLogin]}>{isSignUp ? 'Go to login!' : 'Go to signup!'}</Text>
+      </View>
 
     </View >
   )
@@ -118,25 +123,17 @@ const Registration = () => {
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 32,
+    fontSize: 56,
     color: 'white',
     textAlign: 'center',
-    fontFamily: 'Lato_700Bold'
+    fontFamily: 'Lato_700Bold',
+    flex: 1,
   },
-  buttonPrimary: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'center',
-    paddingVertical: 12,
-    width: 120,
-    // paddingHorizontal: 32,
-    borderRadius: 4,
-    color: colors.tifBlue,
-    borderColor: colors.tifBlue,
-    borderStyle: 'solid',
-    borderWidth: 1,
-    backgroundColor: colors.lighterBlack,
 
+  toggleSignupLogin: {
+    color: 'white',
+    textDecorationLine: 'underline',
+    textAlign: 'center'
   }
 })
 
