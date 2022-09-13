@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 
 import React, { useState } from 'react'
-import { Text, View, Pressable, StyleSheet } from 'react-native'
+import { Text, View, Pressable, StyleSheet, ImageBackground } from 'react-native'
 import InputLine from '@components/atoms/InputLine'
 import api from '../api/index'
 
@@ -43,81 +43,81 @@ const Registration = () => {
       await api.login(data)
     }
   }
-
   return (
-    <View style={[globalStyles.container, { flexDirection: "column", flex: 1 }]}>
-      <Text style={[globalStyles.baseFont, styles.title]}>Drifter</Text>
-      <View style={{ flex: 2, justifyContent: isSignUp ? 'space-between' : 'space-evenly' }}>
-        <Controller
-          control={control}
-          name="email"
-          render={({
-            field: { onChange, value, onBlur },
-            fieldState: { error },
-          }) => (
-            <InputLine
-              label='Your email'
-              placeholder='Email'
-              onChangeInput={onChange}
-              value={value}
-              onBlur={onBlur}
-              error={!!error}
-              errorDetails={error?.message}
-            />
-          )}
-        />
-        {isSignUp && <Controller
-          control={control}
-          name="username"
-          render={({
-            field: { onChange, value, onBlur },
-            fieldState: { error },
-          }) => (
-            <InputLine
-              label='Your username'
-              placeholder='Username'
-              onChangeInput={onChange}
-              value={value}
-              onBlur={onBlur}
-              error={!!error}
-              errorDetails={error?.message}
-            />
-          )}
-        />}
-        <Controller
-          control={control}
-          name="password"
-          render={({
-            field: { onChange, value, onBlur },
-            fieldState: { error },
-          }) => (
-            <InputLine
-              label='Your password'
-              placeholder='Password'
-              onChangeInput={onChange}
-              value={value}
-              onBlur={onBlur}
-              error={!!error}
-              errorDetails={error?.message}
-              secureTextEntry
-            />
-          )}
-        />
-        {errors && Object.keys(errors).length > 0 && (
-          <Text style={{ color: colors.redError }}>
-            Please fill all the fields
-          </Text>
-        )
-        }
-      </View>
-      <View style={{ flex: 2, justifyContent: 'space-evenly' }}>
-        <Pressable style={globalStyles.buttonPrimary} onPress={handleSubmit(sendRegistration)}><Text style={globalStyles.textBtnPrimary}>{isSignUp ? 'Sign up' : 'Login'}</Text></Pressable>
-        <Text style={globalStyles.baseFont}>Credentials forgotten ? </Text>
-        {!isSignUp && <Text style={[globalStyles.baseFont, { textAlign: 'center' }]}>Don't have an account ?</Text>}
-        <Text onPress={() => setIsSignUp(!isSignUp)} style={[globalStyles.baseFont, styles.toggleSignupLogin]}>{isSignUp ? 'Go to login!' : 'Go to signup!'}</Text>
-      </View>
-
-    </View >
+    <ImageBackground source={require("../../assets/login-background.png")} resizeMode="cover" style={styles.backgroundImage}>
+      <View style={[globalStyles.container, { flexDirection: "column", flex: 1 }]}>
+        <Text style={[globalStyles.baseFont, styles.title]}>Drifter</Text>
+        <View style={{ flex: 2, justifyContent: isSignUp ? 'space-between' : 'space-evenly' }}>
+          <Controller
+            control={control}
+            name="email"
+            render={({
+              field: { onChange, value, onBlur },
+              fieldState: { error },
+            }) => (
+              <InputLine
+                label='Your email'
+                placeholder='Email'
+                onChangeInput={onChange}
+                value={value}
+                onBlur={onBlur}
+                error={!!error}
+                errorDetails={error?.message}
+              />
+            )}
+          />
+          {isSignUp && <Controller
+            control={control}
+            name="username"
+            render={({
+              field: { onChange, value, onBlur },
+              fieldState: { error },
+            }) => (
+              <InputLine
+                label='Your username'
+                placeholder='Username'
+                onChangeInput={onChange}
+                value={value}
+                onBlur={onBlur}
+                error={!!error}
+                errorDetails={error?.message}
+              />
+            )}
+          />}
+          <Controller
+            control={control}
+            name="password"
+            render={({
+              field: { onChange, value, onBlur },
+              fieldState: { error },
+            }) => (
+              <InputLine
+                label='Your password'
+                placeholder='Password'
+                onChangeInput={onChange}
+                value={value}
+                onBlur={onBlur}
+                error={!!error}
+                errorDetails={error?.message}
+                secureTextEntry
+              />
+            )}
+          />
+          {errors && Object.keys(errors).length > 0 && (
+            <Text style={{ color: colors.redError }}>
+              Please fill all the fields
+            </Text>
+          )
+          }
+        </View>
+        <View style={{ flex: 2, justifyContent: 'space-evenly' }}>
+          <Pressable style={globalStyles.buttonPrimary} onPress={handleSubmit(sendRegistration)}><Text style={globalStyles.textBtnPrimary}>{isSignUp ? 'Sign up' : 'Login'}</Text></Pressable>
+          <Text style={globalStyles.baseFont}>Credentials forgotten ? </Text>
+          {!isSignUp && <Text style={[globalStyles.baseFont, { textAlign: 'center' }]}>Don't have an account ?</Text>}
+          <Text onPress={() => setIsSignUp(!isSignUp)} style={[globalStyles.baseFont, styles.toggleSignupLogin]}>{isSignUp ? 'Go to login!' : 'Go to signup!'}</Text>
+        </View>
+      </View >
+    </ImageBackground >
   )
 }
 
@@ -134,6 +134,12 @@ const styles = StyleSheet.create({
     color: 'white',
     textDecorationLine: 'underline',
     textAlign: 'center'
+  },
+
+  backgroundImage: {
+    flex: 1,
+    justifyContent: "center"
+
   }
 })
 
