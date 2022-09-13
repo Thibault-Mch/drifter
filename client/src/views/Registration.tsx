@@ -1,15 +1,17 @@
+/* eslint-disable react-native/no-inline-styles */
+
 import React, { useState } from 'react'
-import { Text, View, Button, StyleSheet } from 'react-native'
+import { Text, View, Pressable, StyleSheet, ImageBackground } from 'react-native'
 import InputLine from '@components/atoms/InputLine'
-// import api from '../api/index'
+import api from '../api/index'
 
 import { IUser } from '@interfaces/user.interface'
 import { useForm, Controller } from 'react-hook-form'
 
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import colors from "@src/styles/colors"
-import globalStyles from "@src/styles/globalStyles"
+import { globalStyles, colors } from "@src/styles/index"
+
 const Registration = () => {
 
   const validationSchema = Yup.object({
@@ -20,9 +22,9 @@ const Registration = () => {
     password: Yup.string()
       .min(6, "Your  password needs to be minimum 6 characters")
       .required("Please enter your password"),
-    // confirmPassword: Yup.string()
-    //   .required("Please confirm you")
-    //   .oneOf([Yup.ref("password")], "Les mots de passe ne correspondent pas"),
+    confirmPassword: Yup.string()
+      .required("Please confirm you")
+      .oneOf([Yup.ref("password")], "Les mots de passe ne correspondent pas"),
   }).required();
 
   const { control,
@@ -35,93 +37,109 @@ const Registration = () => {
   const [isSignUp, setIsSignUp] = useState(true)
 
   const sendRegistration = async (data: IUser) => {
-    console.log(data)
-    // if (isSignUp) {
-    //   await api.signup({ username, password, email })
-    // } else {
-    //   await api.login({ email, password })
-    // }
+    if (isSignUp) {
+      await api.signup(data)
+    } else {
+      await api.login(data)
+    }
   }
-
   return (
-    <View style={globalStyles.container}>
-      <Text style={[globalStyles.baseFont, styles.title]}>Drifter</Text>
-      <Controller
-        control={control}
-        name="email"
-        render={({
-          field: { onChange, value, onBlur },
-          fieldState: { error },
-        }) => (
-          <InputLine
-            label='Your email'
-            placeholder='Email'
-            onChangeInput={onChange}
-            value={value}
-            onBlur={onBlur}
-            error={!!error}
-            errorDetails={error?.message}
+    <ImageBackground source={require("../../assets/login-background.png")} resizeMode="cover" style={styles.backgroundImage}>
+      <View style={[globalStyles.container, { flexDirection: "column", flex: 1 }]}>
+        <Text style={[globalStyles.baseFont, styles.title]}>Drifter</Text>
+        <View style={{ flex: 2, justifyContent: isSignUp ? 'space-between' : 'space-evenly' }}>
+          <Controller
+            control={control}
+            name="email"
+            render={({
+              field: { onChange, value, onBlur },
+              fieldState: { error },
+            }) => (
+              <InputLine
+                label='Your email'
+                placeholder='Email'
+                onChangeInput={onChange}
+                value={value}
+                onBlur={onBlur}
+                error={!!error}
+                errorDetails={error?.message}
+              />
+            )}
           />
-
-        )}
-      />
-      {isSignUp && <Controller
-        control={control}
-        name="username"
-        render={({
-          field: { onChange, value, onBlur },
-          fieldState: { error },
-        }) => (
-          <InputLine
-            label='Your username'
-            placeholder='Username'
-            onChangeInput={onChange}
-            value={value}
-            onBlur={onBlur}
-            error={!!error}
-            errorDetails={error?.message}
+          {isSignUp && <Controller
+            control={control}
+            name="username"
+            render={({
+              field: { onChange, value, onBlur },
+              fieldState: { error },
+            }) => (
+              <InputLine
+                label='Your username'
+                placeholder='Username'
+                onChangeInput={onChange}
+                value={value}
+                onBlur={onBlur}
+                error={!!error}
+                errorDetails={error?.message}
+              />
+            )}
+          />}
+          <Controller
+            control={control}
+            name="password"
+            render={({
+              field: { onChange, value, onBlur },
+              fieldState: { error },
+            }) => (
+              <InputLine
+                label='Your password'
+                placeholder='Password'
+                onChangeInput={onChange}
+                value={value}
+                onBlur={onBlur}
+                error={!!error}
+                errorDetails={error?.message}
+                secureTextEntry
+              />
+            )}
           />
-
-        )}
-      />}
-      <Controller
-        control={control}
-        name="password"
-        render={({
-          field: { onChange, value, onBlur },
-          fieldState: { error },
-        }) => (
-          <InputLine
-            label='Your password'
-            placeholder='password'
-            onChangeInput={onChange}
-            value={value}
-            onBlur={onBlur}
-            error={!!error}
-            errorDetails={error?.message}
-            secureTextEntry
-          />
-
-        )}
-      />
-      {errors && Object.keys(errors).length > 0 && (
-        <Text style={{ color: colors.redError }}>
-          Please fill all the fields
-        </Text>
-      )
-      }
-      <Button title={isSignUp ? 'Sign up' : 'Login'} onPress={handleSubmit(sendRegistration)} />
-      <Button title={isSignUp ? 'Go to login' : 'Go to signup'} onPress={() => setIsSignUp(!isSignUp)} />
-    </View >
+          {errors && Object.keys(errors).length > 0 && (
+            <Text style={{ color: colors.redError }}>
+              Please fill all the fields
+            </Text>
+          )
+          }
+        </View>
+        <View style={{ flex: 2, justifyContent: 'space-evenly' }}>
+          <Pressable style={globalStyles.buttonPrimary} onPress={handleSubmit(sendRegistration)}><Text style={globalStyles.textBtnPrimary}>{isSignUp ? 'Sign up' : 'Login'}</Text></Pressable>
+          <Text style={globalStyles.baseFont}>Credentials forgotten ? </Text>
+          {!isSignUp && <Text style={[globalStyles.baseFont, { textAlign: 'center' }]}>Don't have an account ?</Text>}
+          <Text onPress={() => setIsSignUp(!isSignUp)} style={[globalStyles.baseFont, styles.toggleSignupLogin]}>{isSignUp ? 'Go to login!' : 'Go to signup!'}</Text>
+        </View>
+      </View >
+    </ImageBackground >
   )
 }
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 32,
+    fontSize: 56,
     color: 'white',
     textAlign: 'center',
-    fontFamily: 'Lato_700Bold'
+    fontFamily: 'Lato_700Bold',
+    flex: 1,
+  },
+
+  toggleSignupLogin: {
+    color: 'white',
+    textDecorationLine: 'underline',
+    textAlign: 'center'
+  },
+
+  backgroundImage: {
+    flex: 1,
+    justifyContent: "center"
+
   }
 })
 

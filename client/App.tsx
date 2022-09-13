@@ -1,7 +1,6 @@
 import React from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Constants from 'expo-constants';
 
 import {
   useFonts,
@@ -41,7 +40,9 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home" screenOptions={{ contentStyle: { backgroundColor: '#131313' }, headerShown: false }} >
+      <Stack.Navigator initialRouteName="Home" screenOptions={{
+        contentStyle: { backgroundColor: '#131313' }, headerShown: false
+      }} >
         <Stack.Screen name="Registration" component={Registration} />
       </Stack.Navigator>
     </NavigationContainer >
