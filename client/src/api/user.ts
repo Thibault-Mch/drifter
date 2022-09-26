@@ -1,6 +1,6 @@
 import axios from "axios";
 import { API_URL_LOCAL } from "@env"
-import { ILogin } from '../../../server/src/interfaces/user.interface'
+import { ILogin } from '@interfaces/user.interface'
 import * as SecureStore from 'expo-secure-store';
 
 const login = async (loginData: ILogin) => {
@@ -12,7 +12,7 @@ const login = async (loginData: ILogin) => {
     return res.data;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
-      console.log(error.response.data);
+      throw error.response.data;
     } else {
       console.log('Unexpected error', error);
     }

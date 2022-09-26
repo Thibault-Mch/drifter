@@ -30,14 +30,17 @@ const Registration = () => {
       resolver: yupResolver(validationSchema)
     })
 
-
   const sendRegistration = async (data: IUser) => {
-    if (isSignUp) {
-      console.log("signup")
-      await api.signup(data)
-    } else {
-      console.log('login')
-      await api.login(data)
+    try {
+      if (isSignUp) {
+        console.log("signup")
+        await api.signup(data)
+      } else {
+        console.log('login')
+        await api.login(data)
+      }
+    } catch (error) {
+      console.log(error)
     }
   }
   return (
