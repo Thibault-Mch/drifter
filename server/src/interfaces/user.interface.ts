@@ -9,4 +9,3 @@ export interface IUser extends ILogin {
   creationDate: string;
   modificationDate: string;
 }
-

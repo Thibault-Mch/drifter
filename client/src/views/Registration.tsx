@@ -1,5 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
-
 import React, { useState } from 'react'
 import { Text, View, Pressable, StyleSheet, ImageBackground } from 'react-native'
 import InputLine from '@components/atoms/InputLine'
@@ -13,6 +11,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { globalStyles, colors } from "@src/styles/index"
 
 const Registration = () => {
+  const [isSignUp, setIsSignUp] = useState(true)
 
   const validationSchema = Yup.object({
     username: Yup.string().required("Please enter your username"),
@@ -22,9 +21,6 @@ const Registration = () => {
     password: Yup.string()
       .min(6, "Your  password needs to be minimum 6 characters")
       .required("Please enter your password"),
-    confirmPassword: Yup.string()
-      .required("Please confirm you")
-      .oneOf([Yup.ref("password")], "Les mots de passe ne correspondent pas"),
   }).required();
 
   const { control,
@@ -34,12 +30,13 @@ const Registration = () => {
       resolver: yupResolver(validationSchema)
     })
 
-  const [isSignUp, setIsSignUp] = useState(true)
 
   const sendRegistration = async (data: IUser) => {
     if (isSignUp) {
+      console.log("signup")
       await api.signup(data)
     } else {
+      console.log('login')
       await api.login(data)
     }
   }
@@ -79,7 +76,7 @@ const Registration = () => {
                 onChangeInput={onChange}
                 value={value}
                 onBlur={onBlur}
-                error={!!error}
+                error={isSignUp ? !!error : false}
                 errorDetails={error?.message}
               />
             )}
@@ -111,7 +108,9 @@ const Registration = () => {
           }
         </View>
         <View style={{ flex: 2, justifyContent: 'space-evenly' }}>
-          <Pressable style={globalStyles.buttonPrimary} onPress={handleSubmit(sendRegistration)}><Text style={globalStyles.textBtnPrimary}>{isSignUp ? 'Sign up' : 'Login'}</Text></Pressable>
+          <Pressable style={globalStyles.buttonPrimary} onPress={handleSubmit(sendRegistration)}>
+            <Text style={globalStyles.textBtnPrimary}>{isSignUp ? 'Sign up' : 'Login'}</Text>
+          </Pressable>
           <Text style={globalStyles.baseFont}>Credentials forgotten ? </Text>
           {!isSignUp && <Text style={[globalStyles.baseFont, { textAlign: 'center' }]}>Don't have an account ?</Text>}
           <Text onPress={() => setIsSignUp(!isSignUp)} style={[globalStyles.baseFont, styles.toggleSignupLogin]}>{isSignUp ? 'Go to login!' : 'Go to signup!'}</Text>
@@ -138,8 +137,8 @@ const styles = StyleSheet.create({
 
   backgroundImage: {
     flex: 1,
-    justifyContent: "center"
-
+    justifyContent: "center",
+    backgroundColor: 'rgba(0, 0, 0, 0.9)',
   }
 })
 
