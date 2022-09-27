@@ -13,7 +13,7 @@ class JWT {
     if (authHeader && authHeader !== "null") {
       // const token = authHeader.split(" ")[1];
       log("auth Header", privateKey)
-      jwt.verify(authHeader, privateKey, (err: any, user: any) => {
+      jwt.verify(authHeader, privateKey, (err: Error) => {
         if (err) {
           log("Error", err)
           return res
