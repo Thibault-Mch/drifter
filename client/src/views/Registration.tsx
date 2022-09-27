@@ -14,7 +14,8 @@ const Registration = () => {
   const [isSignUp, setIsSignUp] = useState(true)
 
   const validationSchema = Yup.object({
-    username: Yup.string().required("Please enter your username"),
+    isSignUp: Yup.boolean(),
+    username: isSignUp ? Yup.string().required("Please enter your username") : Yup.string(),
     email: Yup.string()
       .email("Please enter a valid address email")
       .required("Please enter your email"),
@@ -34,7 +35,7 @@ const Registration = () => {
     try {
       if (isSignUp) {
         console.log("signup")
-        await api.signup(data)
+        await api.signUp(data)
       } else {
         console.log('login')
         await api.login(data)

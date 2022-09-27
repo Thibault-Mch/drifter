@@ -23,7 +23,7 @@ module.exports = {
   'rules': {
     'prettier/prettier': 'off',
     'react-native/no-unused-styles': 'warn',
-    // 'react-native/no-inline-styles': 'error',
+    'react-native/no-inline-styles': 'off',
     'react-native/no-raw-text': ['warn', {
       skip: ['CustomText']
     }],

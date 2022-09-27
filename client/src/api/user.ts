@@ -8,6 +8,7 @@ const login = async (loginData: ILogin) => {
     const res = await axios.post(
       `${API_URL_LOCAL}/login`, loginData
     );
+    console.log(res.data)
     saveToken(res.data.token)
     return res.data;
   } catch (error) {
@@ -19,9 +20,10 @@ const login = async (loginData: ILogin) => {
   }
 }
 
-const signup = async (data: ILogin) => {
+const signUp = async (data: ILogin) => {
   try {
     const res = await axios.post(`${API_URL_LOCAL}/signup`, data)
+    saveToken(res.data.token)
     return res.data
   } catch (error) {
     if (axios.isAxiosError(error) && error.response) {
@@ -55,5 +57,5 @@ const saveToken = async (token: string) => {
 
 export default {
   login,
-  signup
+  signUp
 };
